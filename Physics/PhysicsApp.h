@@ -34,7 +34,7 @@ public:
   void kinematicTest();
   void ropeTest(int num);
   void softBodyTest();
-  void moveCubeTest();
+  void moveBoxTest();
 
 protected:
   aie::Renderer2D* m_2dRenderer;
@@ -45,7 +45,7 @@ protected:
   PhysicsScene* m_physicsScene;
   PoolTableGame* m_poolTableGame;
 
-  Box* m_moveCubeBox;
+  Box* m_moveBox;
 
   float m_timer = 0;
 };

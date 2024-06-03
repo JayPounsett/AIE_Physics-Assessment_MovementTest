@@ -69,7 +69,7 @@ bool PhysicsApp::startup()
   // kinematicTest();
   // ropeTest(10);
   // softBodyTest();
-  moveCubeTest();
+  moveBoxTest();
 
   return true;
 }
@@ -89,7 +89,7 @@ void PhysicsApp::update(float deltaTime)
   m_physicsScene->update(deltaTime);
   m_physicsScene->draw();
 
-  MoveBox* objectMovement = new MoveBox(m_moveCubeBox);
+  MoveBox* objectMovement = new MoveBox(m_moveBox);
   objectMovement->update(deltaTime, input);
 
   // exit the application
@@ -373,18 +373,18 @@ void PhysicsApp::softBodyTest()
   sb.push_back("000000......000.........000...");
   Softbody::Build(m_physicsScene, glm::vec2(-75, 0), 5.0f, 50.0f, 50.0f, sb);
 }
-void PhysicsApp::moveCubeTest()
+void PhysicsApp::moveBoxTest()
 {
   m_physicsScene->setGravity(glm::vec2(0, 0));
 
-  m_moveCubeBox = new Box(
+  m_moveBox = new Box(
     glm::vec2(0, 0),
-    glm::vec2(3),
+    glm::vec2(20, 1),
     glm::vec2(0),
     1.0f,
     0.0f,
     1.0f,
     glm::vec4(1, 1, 0, 1));
 
-  m_physicsScene->addActor(m_moveCubeBox);
+  m_physicsScene->addActor(m_moveBox);
 }
