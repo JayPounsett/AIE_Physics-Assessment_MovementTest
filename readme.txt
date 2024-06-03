@@ -1,12 +1,16 @@
-The game simulation within the project is incomplete, pool game is only the bare minimum to show off the physics as I had a few issues and was running out of time.
+Copy of Assessment Project to create a movement system without thinking about the game simulation.
 
-Within the project, there are other simulations in PhysicsApp::startup() that showcase physics like:
-- dropBallsAndCubes()
-- kinematicTest()
-- ropeTest(10)
-- softBodyTest()
+## Keyboard Controls
+W: Up
+S: Down
+A: Left
+D: Right
+Q: Turn Left
+E: Turn Right
 
-------------------
+Currently the box only moves up/down/left/right while turn left/right is not yet functioning.
 
--= Pool Table Game =-
-Controls: Hold & release the space bar
+## Code Notes
+- moveBoxTest() is started in PhysicsApp::Startup()
+- All movement functionality is within MoveBox.h
+- Box::draw() creates a rotation matrix and uses that to alter the box's points as it is drawn, hoping to have it rotate.
