@@ -31,7 +31,9 @@
     <ClCompile Include="Softbody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Movement.cpp" />
+    <ClCompile Include="MoveBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PhysicsApp.h">
@@ -61,7 +63,9 @@
     <ClInclude Include="Softbody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Movement.h" />
+    <ClInclude Include="MoveBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
