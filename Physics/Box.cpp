@@ -110,38 +110,48 @@ bool Box::checkBoxCorners(
 
 void Box::draw()
 {
-  //// draw using local axes
-  // glm::vec2 p1 = m_position - m_localX * m_extents.x - m_localY *
-  // m_extents.y; glm::vec2 p2 = m_position + m_localX * m_extents.x - m_localY
-  // * m_extents.y; glm::vec2 p3 = m_position - m_localX * m_extents.x +
-  // m_localY * m_extents.y; glm::vec2 p4 = m_position + m_localX * m_extents.x
-  // + m_localY * m_extents.y;
+  // draw using local axes
+  glm::vec2 m_bottomLeft = m_position - m_localX * m_extents.x - m_localY * m_extents.y;
+  glm::vec2 m_bottomRight = m_position + m_localX * m_extents.x - m_localY * m_extents.y;
+  glm::vec2 m_topLeft = m_position - m_localX * m_extents.x + m_localY * m_extents.y;
+  glm::vec2 m_topRight = m_position + m_localX * m_extents.x + m_localY * m_extents.y;
 
-  // aie::Gizmos::add2DTri(p1, p2, p4, m_colour);
-  // aie::Gizmos::add2DTri(p1, p4, p3, m_colour);
+  aie::Gizmos::add2DTri(m_bottomLeft, m_bottomRight, m_topRight, m_colour);
+  aie::Gizmos::add2DTri(m_bottomLeft, m_topRight, m_topLeft, m_colour);
 
-  // Calculate the rotation matrix
-  glm::mat3 rotationMatrix = createRotationMatrix(m_orientationRadians);
+  //m_rotationMatrix = glm::mat3(
+  //  cos(this->getOrientationRadians()),
+  //  -sin(this->getOrientationRadians()),
+  //  0.0f,
+  //  sin(this->getOrientationRadians()),
+  //  cos(this->getOrientationRadians()),
+  //  0.0f,
+  //  0.0f,
+  //  0.0f,
+  //  0.0f);
 
-  // Transform the local axes using the rotation matrix
-  glm::vec2 transformedLocalX =
-    rotationMatrix * glm::vec3(m_localX.x, m_localX.y, 1.0f);
-  glm::vec2 transformedLocalY =
-    rotationMatrix * glm::vec3(m_localY.x, m_localY.y, 1.0f);
+  //this->rotatePoint(m_topLeft, this->getOrientationRadians());
+  //this->rotatePoint(m_topRight, this->getOrientationRadians());
+  //this->rotatePoint(m_bottomRight, this->getOrientationRadians());
+  //this->rotatePoint(m_bottomLeft, this->getOrientationRadians());
+}
 
-  // Calculate the transformed vertices of the box
-  glm::vec2 p1 = m_position - transformedLocalX * m_extents.x -
-                 transformedLocalY * m_extents.y;
-  glm::vec2 p2 = m_position + transformedLocalX * m_extents.x -
-                 transformedLocalY * m_extents.y;
-  glm::vec2 p3 = m_position - transformedLocalX * m_extents.x +
-                 transformedLocalY * m_extents.y;
-  glm::vec2 p4 = m_position + transformedLocalX * m_extents.x +
-                 transformedLocalY * m_extents.y;
+void Box::rotate(glm::vec2 vec, float angleDegrees, glm::vec2 origin)
+{
+  float x= vec.x - origin.x;
+  float y = vec.y - origin.y;
+  
+  float cs = cos(glm::radians(angleDegrees));
+  float sn = sin(glm::radians(angleDegrees));
+  
+  float xPrime = (x * cs) - (y * sn);
+  float yPrime = (x * sn) + (y * cs);
+  
+  xPrime += origin.x;
+  yPrime += origin.y;
 
-  // Draw the rotated box
-  aie::Gizmos::add2DTri(p1, p2, p4, m_colour);
-  aie::Gizmos::add2DTri(p1, p4, p3, m_colour);
+  vec.x = xPrime;
+  vec.y = yPrime;
 }
 
 #pragma region Cue Aiming Line
@@ -170,7 +180,7 @@ glm::vec2 Box::getFacing()
   float yValue = 0.0f;
 
   xValue = glm::cos(radians);
-  yValue = glm::sin(-radians);
+  yValue = glm::sin(radians);
 
   glm::vec2 normVector = glm::normalize(glm::vec2(xValue, yValue));
 

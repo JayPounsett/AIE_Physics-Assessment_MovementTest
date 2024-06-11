@@ -43,9 +43,9 @@ protected:
   aie::Font* m_font;
 
   PhysicsScene* m_physicsScene;
-  PoolTableGame* m_poolTableGame;
 
   Box* m_moveBox;
+  Sphere* m_sphere;
 
   float m_timer = 0;
 };

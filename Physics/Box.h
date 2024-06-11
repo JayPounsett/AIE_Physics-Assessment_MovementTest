@@ -37,7 +37,6 @@ public:
 
   ~Box();
 
-  // void fixedUpdate(glm::vec2 gravity, float timeStep);
   bool checkBoxCorners(
     const Box& box,
     glm::vec2& contact,
@@ -46,40 +45,7 @@ public:
     glm::vec2& edgeNormal);
   virtual void draw();
 
-
-#pragma region Create Matrix3
-  glm::mat3 createTranslationMatrix(glm::vec2 position)
-  {
-    glm::mat3 translationMatrix = glm::mat3(
-      1.0f, 0.0f, position.x, 0.0f, 1.0f, position.y, 0.0f, 0.0f, 1.0f);
-
-    return translationMatrix;
-  }
-
-  glm::mat3 createRotationMatrix(float angleRadians)
-  {
-    glm::mat3 rotationMatrix = glm::mat3(
-      cos(angleRadians),
-      -sin(angleRadians),
-      0.0f,
-      sin(angleRadians),
-      cos(angleRadians),
-      0.0f,
-      0.0f,
-      0.0f,
-      1.0f);
-
-    return rotationMatrix;
-  }
-
-  glm::mat3 createScaleMatrix(float xScale, float yScale)
-  {
-    glm::mat3 scaleMatrix =
-      glm::mat3(xScale, 0.0f, 0.0f, 0.0f, yScale, 0.0f, 0.0f, 0.0f, 1.0f);
-
-    return scaleMatrix;
-  }
-#pragma endregion Create Matrix3
+  void rotate(glm::vec2 vec, float angleDegrees, glm::vec2 origin);
 
   void drawCueAimLine();
 
@@ -100,7 +66,21 @@ protected:
     return 1.0f / 12.0f * mass * (2 * x) * (2 * y);
   }
 
+  //glm::vec2 rotatePoint(glm::vec2 point, float angle)
+  //{
+  //  float x = point.x * cos(angle) - point.y * sin(angle);
+  //  float y = point.x * sin(angle) + point.y * cos(angle);
+  //  return glm::vec2(x, y);
+  //}
+
 protected:
   glm::vec2 m_extents; // the half-edge lengths
   glm::vec4 m_colour;
+  //glm::mat3 m_rotationMatrix = glm::mat3(0);
+  
+  // The corners of the box
+  glm::vec2 m_topLeft = glm::vec2(0);
+  glm::vec2 m_bottomLeft = glm::vec2(0);
+  glm::vec2 m_topRight = glm::vec2(0);
+  glm::vec2 m_bottomRight = glm::vec2(0);
 };

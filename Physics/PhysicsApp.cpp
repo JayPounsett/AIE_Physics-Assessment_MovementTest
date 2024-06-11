@@ -89,7 +89,7 @@ void PhysicsApp::update(float deltaTime)
   m_physicsScene->update(deltaTime);
   m_physicsScene->draw();
 
-  MoveBox* objectMovement = new MoveBox(m_moveBox);
+  MoveBox* objectMovement = new MoveBox(m_moveBox, m_sphere);
   objectMovement->update(deltaTime, input);
 
   // exit the application
@@ -378,13 +378,22 @@ void PhysicsApp::moveBoxTest()
   m_physicsScene->setGravity(glm::vec2(0, 0));
 
   m_moveBox = new Box(
-    glm::vec2(0, 0),
+    glm::vec2(26, 0),
     glm::vec2(20, 1),
     glm::vec2(0),
     1.0f,
-    0.0f,
+    180.0f,
     1.0f,
     glm::vec4(1, 1, 0, 1));
 
+    m_sphere = new Sphere(
+      glm::vec2(0, 0),
+      glm::vec2(0),
+      1.0f,
+      5.0f,
+      1.0f,
+      glm::vec4(0, 0, 1, 1));
+
   m_physicsScene->addActor(m_moveBox);
+  m_physicsScene->addActor(m_sphere);
 }
