@@ -66,18 +66,17 @@ protected:
     return 1.0f / 12.0f * mass * (2 * x) * (2 * y);
   }
 
-  //glm::vec2 rotatePoint(glm::vec2 point, float angle)
-  //{
-  //  float x = point.x * cos(angle) - point.y * sin(angle);
-  //  float y = point.x * sin(angle) + point.y * cos(angle);
-  //  return glm::vec2(x, y);
-  //}
+  glm::vec2 rotatePoint(glm::vec2 point, float angle)
+  {
+    float x = point.x * cos(angle) - point.y * sin(angle);
+    float y = point.x * sin(angle) + point.y * cos(angle);
+    return glm::vec2(x, y);
+  }
 
 protected:
   glm::vec2 m_extents; // the half-edge lengths
   glm::vec4 m_colour;
-  //glm::mat3 m_rotationMatrix = glm::mat3(0);
-  
+    
   // The corners of the box
   glm::vec2 m_topLeft = glm::vec2(0);
   glm::vec2 m_bottomLeft = glm::vec2(0);

@@ -110,43 +110,41 @@ bool Box::checkBoxCorners(
 
 void Box::draw()
 {
-  // draw using local axes
-  glm::vec2 m_bottomLeft = m_position - m_localX * m_extents.x - m_localY * m_extents.y;
-  glm::vec2 m_bottomRight = m_position + m_localX * m_extents.x - m_localY * m_extents.y;
-  glm::vec2 m_topLeft = m_position - m_localX * m_extents.x + m_localY * m_extents.y;
-  glm::vec2 m_topRight = m_position + m_localX * m_extents.x + m_localY * m_extents.y;
+  glm::mat2 test = glm::mat2(m_rotationMatrix);
 
-  aie::Gizmos::add2DTri(m_bottomLeft, m_bottomRight, m_topRight, m_colour);
-  aie::Gizmos::add2DTri(m_bottomLeft, m_topRight, m_topLeft, m_colour);
+  glm::mat4 transform = glm::rotate(glm::mat4(1.0f), m_orientationRadians, glm::vec3(0,0,1));
+  aie::Gizmos::add2DAABBFilled(m_position, m_extents, m_colour, &transform);
 
-  //m_rotationMatrix = glm::mat3(
-  //  cos(this->getOrientationRadians()),
-  //  -sin(this->getOrientationRadians()),
-  //  0.0f,
-  //  sin(this->getOrientationRadians()),
-  //  cos(this->getOrientationRadians()),
-  //  0.0f,
-  //  0.0f,
-  //  0.0f,
-  //  0.0f);
+  //// draw using local axes
+  //glm::vec2 m_bottomLeft =
+  //  m_position - test[0] * m_extents.x - test[1] * m_extents.y;
+  //glm::vec2 m_bottomRight =
+  //  m_position + test[0] * m_extents.x - test[1] * m_extents.y;
+  //glm::vec2 m_topLeft =
+  //  m_position - test[0] * m_extents.x + test[1] * m_extents.y;
+  //glm::vec2 m_topRight =
+  //  m_position + test[0] * m_extents.x + test[1] * m_extents.y;
 
-  //this->rotatePoint(m_topLeft, this->getOrientationRadians());
-  //this->rotatePoint(m_topRight, this->getOrientationRadians());
-  //this->rotatePoint(m_bottomRight, this->getOrientationRadians());
-  //this->rotatePoint(m_bottomLeft, this->getOrientationRadians());
+  //aie::Gizmos::add2DTri(m_bottomLeft, m_bottomRight, m_topRight, m_colour);
+  //aie::Gizmos::add2DTri(m_bottomLeft, m_topRight, m_topLeft, m_colour);
+
+  /*m_bottomLeft = glm::mat2(m_rotationMatrix) * m_bottomLeft;
+  m_topLeft = glm::mat2(m_rotationMatrix) * m_topLeft;
+  m_bottomRight = glm::mat2(m_rotationMatrix) * m_bottomRight;
+  m_topRight = glm::mat2(m_rotationMatrix) * m_topRight;*/
 }
 
 void Box::rotate(glm::vec2 vec, float angleDegrees, glm::vec2 origin)
 {
-  float x= vec.x - origin.x;
+  float x = vec.x - origin.x;
   float y = vec.y - origin.y;
-  
+
   float cs = cos(glm::radians(angleDegrees));
   float sn = sin(glm::radians(angleDegrees));
-  
+
   float xPrime = (x * cs) - (y * sn);
   float yPrime = (x * sn) + (y * cs);
-  
+
   xPrime += origin.x;
   yPrime += origin.y;
 

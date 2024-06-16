@@ -31,7 +31,7 @@
     <ClCompile Include="Softbody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MoveBox.cpp">
+    <ClCompile Include="PoolTableGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -63,7 +63,7 @@
     <ClInclude Include="Softbody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MoveBox.h">
+    <ClInclude Include="PoolTableGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

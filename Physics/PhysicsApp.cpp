@@ -9,7 +9,7 @@
 #include "Font.h"
 #include "Gizmos.h"
 #include "Input.h"
-#include "MoveBox.h"
+#include "PoolTableGame.h"
 #include "Plane.h"
 #include "Softbody.h"
 #include "Sphere.h"
@@ -89,7 +89,7 @@ void PhysicsApp::update(float deltaTime)
   m_physicsScene->update(deltaTime);
   m_physicsScene->draw();
 
-  MoveBox* objectMovement = new MoveBox(m_moveBox, m_sphere);
+  PoolTableGame* objectMovement = new PoolTableGame(m_cueStick, m_cueBall);
   objectMovement->update(deltaTime, input);
 
   // exit the application
@@ -377,7 +377,7 @@ void PhysicsApp::moveBoxTest()
 {
   m_physicsScene->setGravity(glm::vec2(0, 0));
 
-  m_moveBox = new Box(
+  m_cueStick = new Box(
     glm::vec2(26, 0),
     glm::vec2(20, 1),
     glm::vec2(0),
@@ -386,14 +386,14 @@ void PhysicsApp::moveBoxTest()
     1.0f,
     glm::vec4(1, 1, 0, 1));
 
-    m_sphere = new Sphere(
+    m_cueBall = new Sphere(
       glm::vec2(0, 0),
       glm::vec2(0),
       1.0f,
       5.0f,
       1.0f,
-      glm::vec4(0, 0, 1, 1));
+      glm::vec4(1, 1, 1, 1));
 
-  m_physicsScene->addActor(m_moveBox);
-  m_physicsScene->addActor(m_sphere);
+  m_physicsScene->addActor(m_cueStick);
+  m_physicsScene->addActor(m_cueBall);
 }

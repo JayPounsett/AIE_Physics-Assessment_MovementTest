@@ -5,11 +5,11 @@
 
 #include <Input.h>
 
-class MoveBox
+class PoolTableGame
 {
 public:
-  MoveBox(Box* box, Sphere* sphere) { m_box = box; m_sphere = sphere; }
-  ~MoveBox();
+  PoolTableGame(Box* box, Sphere* sphere) { m_cueStick = box; m_cueBall = sphere; }
+  ~PoolTableGame();
 
   void update(float deltaTime, aie::Input* input);
   void draw();
@@ -21,13 +21,12 @@ protected:
   /// <param name="deltaTime"> Time since last frame.</param>
   /// <param name="input"> Input object.</param>
   /// <param name="obj"> Rigidbody object to move.</param>
-  void moveBox(float deltaTime, aie::Input* input, Box* box, Sphere* sphere);
+  void GameInput(float deltaTime, aie::Input* input, Box* box, Sphere* sphere);
 
 protected:
-  glm::mat3 m_boxMatrix = glm::mat3(0.0f);
-  glm::mat3 m_rotationMatrix = glm::mat3(0);
+  glm::mat3 m_cueStickRotationMatrix = glm::mat3(1.0f);
 
-  Box* m_box;
-  Sphere* m_sphere;
+  Box* m_cueStick;
+  Sphere* m_cueBall;
   
 };

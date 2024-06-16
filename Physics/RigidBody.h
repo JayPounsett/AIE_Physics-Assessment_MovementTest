@@ -52,8 +52,11 @@ public:
   /// <returns>Angle in radians</returns>
   void setOrientation(float angleDegrees)
   {
-    // Not assigning value!
     this->m_orientationRadians = glm::radians(angleDegrees);
+  }
+  void setOrientation(glm::mat3 matrix )
+  {
+    this->m_rotationMatrix = matrix;
   }
 
   void setPosition(glm::vec2 newPosition) { this->m_position = newPosition; }
@@ -92,8 +95,8 @@ protected:
   float m_angularVelocity = 0.0f;
   float m_moment = 0.0f;
   
-  glm::vec2 m_localX{0, 0};
-  glm::vec2 m_localY{0, 0};
+  glm::vec2 m_localX{1, 0};
+  glm::vec2 m_localY{0, 1};
 
   bool m_isKinematic = false;
 
@@ -102,4 +105,6 @@ protected:
 
   const float MIN_LINEAR_THRESHOLD = 0.01f;
   const float MIN_ANGULAR_THRESHOLD = 0.01f;
+
+  glm::mat3 m_rotationMatrix = glm::mat3(1.0f);
 };

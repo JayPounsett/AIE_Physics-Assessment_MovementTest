@@ -44,8 +44,8 @@ protected:
 
   PhysicsScene* m_physicsScene;
 
-  Box* m_moveBox;
-  Sphere* m_sphere;
+  Box* m_cueStick;
+  Sphere* m_cueBall;
 
   float m_timer = 0;
 };

@@ -1,30 +1,19 @@
-#include "MoveBox.h"
+#include "PoolTableGame.h"
 
 #include <Input.h>
 
-MoveBox::~MoveBox() {}
+PoolTableGame::~PoolTableGame() {}
 
-void MoveBox::update(float deltaTime, aie::Input* input)
+void PoolTableGame::update(float deltaTime, aie::Input* input)
 {
-  if (m_box == nullptr || m_sphere == nullptr) return;
+  if (m_cueStick == nullptr || m_cueBall == nullptr) return;
 
-  moveBox(deltaTime, input, m_box, m_sphere);
-
-  // m_rotationMatrix = glm::mat3(
-  //   cos(m_box->getOrientationRadians()),
-  //   -sin(m_box->getOrientationRadians()),
-  //   0.0f,
-  //   sin(m_box->getOrientationRadians()),
-  //   cos(m_box->getOrientationRadians()),
-  //   0.0f,
-  //   0.0f,
-  //   0.0f,
-  //   0.0f);
+  GameInput(deltaTime, input, m_cueStick, m_cueBall);
 }
 
-void MoveBox::draw() { m_box->draw(); }
+void PoolTableGame::draw() { m_cueStick->draw(); }
 
-void MoveBox::moveBox(
+void PoolTableGame::GameInput(
   float deltaTime, aie::Input* input, Box* box, Sphere* sphere)
 {
   // Get the current position of the box and sphere
@@ -43,7 +32,7 @@ void MoveBox::moveBox(
   //box->setOrientation(glm::degrees(angle));
 
   // Calculate the perpendicular direction for strafing
-  glm::vec2 strafeDirection = glm::vec2(-direction.y, direction.x);
+  glm::vec2 rotationDirection = glm::vec2(-direction.y, direction.x);
 
   // Calculate the up vector for the lookAt matrix
   glm::vec2 up = glm::vec2(0, 1);
@@ -52,17 +41,17 @@ void MoveBox::moveBox(
   glm::mat4 lookAtMatrix = glm::lookAt(
     glm::vec3(boxPosition.x, boxPosition.y, 0),
     glm::vec3(spherePosition.x, spherePosition.y, 0),
-    glm::vec3(up.x, up.y, 0));
+    glm::vec3(0, 0, 1));
 
   // Extract the rotation matrix from the lookAt matrix
-  glm::mat3 rotationMatrix = glm::mat3(lookAtMatrix);
+  m_cueStickRotationMatrix = glm::mat3(lookAtMatrix);
 
   // Calculate the new orientation based on the rotation matrix
   float newOrientation =
-    glm::degrees(atan2(rotationMatrix[1][0], rotationMatrix[0][0]));
+    glm::degrees(atan2(m_cueStickRotationMatrix[1][0], m_cueStickRotationMatrix[0][0]));
 
   // Update the orientation of the box
-  box->setOrientation(newOrientation);
+  box->setOrientation(newOrientation + 90.0f);
 
   // Define movement speed for strafing
   float strafeSpeed = 100.0f * deltaTime;
@@ -70,13 +59,13 @@ void MoveBox::moveBox(
   // Move left when pressing A
   if (input->isKeyDown(aie::INPUT_KEY_A))
   {
-    box->setPosition(box->getPosition() - strafeDirection * strafeSpeed);
+    box->setPosition(box->getPosition() - rotationDirection * strafeSpeed);
   }
 
   // Move right when pressing D
   if (input->isKeyDown(aie::INPUT_KEY_D))
   {
-    box->setPosition(box->getPosition() + strafeDirection * strafeSpeed);
+    box->setPosition(box->getPosition() + rotationDirection * strafeSpeed);
   }
 
   // Move toward sphere when pressing W
